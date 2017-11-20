@@ -1,0 +1,139 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+typedef struct BStree
+{
+	int data;
+	struct BStree *lchild,*rchild;
+}Bst;
+
+Bst *bsearch(Bst *root,int key,Bst *&father);
+int insert(Bst *&root,int num);
+void create(Bst *&root);
+void preorder(Bst *root);
+void del(Bst *&root,int delnum);
+
+Bst *bsearch(Bst *root,int key,Bst *&father)
+{
+	Bst *p;
+	p=root;
+    father=NULL;
+	while(p!=NULL&&p->data!=key)
+	{
+		father=p;// return address
+		if(p->data>key) p=p->lchild;
+		else p=p->rchild;
+		
+	}
+    return p;
+}
+
+int insert(Bst *&root,int num)
+{
+	Bst *s,*q,*f;
+	f=NULL;
+	s=(Bst*)malloc(sizeof(Bst));
+	s->data=num;
+	s->lchild=NULL;
+	s->rchild=NULL;
+	q=bsearch(root,num,f);
+    if(q!=NULL) return 0;
+	if(f==NULL) root=s;
+    else if (num<f->data) f->lchild=s;
+	else f->rchild=s;
+	return -1;
+	
+}
+
+void create(Bst *&root)
+{
+	int a;
+	while(true)
+	{
+		
+		fflush(stdin);
+		scanf("%d",&a);
+		if(a==0) break;
+		insert(root,a);
+	}
+	
+}
+void del(Bst *&root,int delnum)
+{
+	Bst *m,*fn,*s,*t;
+    m=bsearch(root,delnum,fn);
+	if(m->lchild==NULL&&m->rchild==NULL)
+    {
+		if(m->data<fn->data)  fn->lchild=NULL;
+		else fn->rchild=NULL;
+		
+	}
+	else if (m->lchild!=NULL&&m->rchild==NULL)
+	{
+		if(m->data<fn->data) fn->lchild=m->lchild;
+		else fn->rchild=m->lchild;
+		
+	}
+	else if(m->lchild==NULL&&m->rchild!=NULL)
+	{
+		if(m->data<fn->data) fn->lchild=m->rchild;
+		else fn->rchild=m->rchild;
+		
+		
+	}
+	else //p->lchild!=null&&p->rchild!=null //find left-child-tree inorder last node
+	{
+		s=m->lchild;
+		if(s->lchild==NULL&&s->rchild==NULL) 
+		{
+			m->data=s->data;
+			m->lchild=NULL;	   
+		}
+		else if(s->lchild!=NULL&&s->rchild==NULL)
+		{
+			m->data=s->data;
+			m->lchild=s->lchild;
+		}
+		else
+		{
+			while(s->rchild!=NULL)
+			{t=s;s=s->rchild;}
+			m->data=s->data;
+			if(s->lchild==NULL) t->rchild=NULL;
+			else t->rchild=s->lchild;
+		}
+		
+		//t->rchild=s->lchild;
+		
+		
+	}
+	
+	
+}
+void preorder(Bst *root)
+{
+	
+	if(root!=NULL)
+	{printf("%d",root->data);
+	printf("\t");
+	   preorder(root->lchild);
+	   preorder(root->rchild);
+	}
+	
+	
+}
+void main(int argc, char* argv[])
+{
+	Bst *bs;
+	bs=NULL;
+	create(bs);
+	preorder(bs);
+	printf("\n");
+	del(bs,78);
+	preorder(bs);
+	printf("\n");
+	
+}
