@@ -1,0 +1,225 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define MAX 7
+//#define QUEUE_SIZE 8
+//无向图
+//数组 a[5]-->a[0~4]
+typedef struct Enode
+{
+	int en;
+    Enode *next;
+}Enode;
+typedef struct
+{
+	char vertex;
+	Enode *firstedge;
+	
+}Vnode;
+typedef struct
+{
+	int vexnum;
+    int ednum;
+    Vnode vexs[MAX]; //for link vnode
+}Graph;
+//queue define
+typedef struct
+{
+	int front,rear;
+    int *base;
+	
+}Queue;
+//function declare
+void graphs();
+int getpos(Graph *g,char f);
+void creategraph(Graph *g);
+void DFS(Graph *g,int k);
+void BFS(Graph *g);
+void initQueue(Queue *e);
+void enQueue(Queue *e,int num);
+void deQueue(Queue *e);
+// queue function
+void initQueue(Queue *e)
+{
+	e->base=(int*)malloc(MAX*sizeof(int));
+    e->front=0;
+	e->rear=0;
+	
+}
+void enQueue(Queue *e,int num)
+{
+	if(e->rear-e->front==MAX)
+		printf("full");
+	else
+	{
+		e->base[e->rear]=num;
+		e->rear++;
+	}
+	
+	
+}
+
+void deQueue(Queue *e)
+{
+	if(e->front==e->rear)
+		printf("empty");
+	else
+		e->front++;
+	
+}
+void graphs()
+{
+	printf("\n");
+	printf("   A");printf("-----");printf("F");printf("-----");printf("G");printf("-----");printf("E");printf("\n");
+    printf("   |");printf(" \\");printf("\n");printf("   |");printf("   \\");printf("\n");printf("   |");printf("     \\");printf("\n");
+    printf("   C");printf("------");printf("D");printf("\n");
+	printf("   |");printf("\n");printf("   |");printf("\n");printf("   |");printf("\n");
+    printf("   B");printf("\n");
+	
+}
+int getpos(Graph *g,char f)
+{
+	int c;
+    for(c=0;c<g->vexnum;c++)
+	{
+		if(g->vexs[c].vertex==f)
+			return c;
+		
+	}
+	
+    return -1;
+	
+}
+
+void creategraph(Graph *g)
+{
+	int v,e,a,p1,p2,m,n,i;
+	
+	char vex[]={'A','B','C','D','E','F','G'};
+	printf("input vexnum and edgenum:");
+	scanf("%d%d",&v,&e);
+	g->ednum=e;g->vexnum=v;
+	for(a=0;a<g->vexnum;a++)
+	{
+		g->vexs[a].vertex=vex[a];
+		g->vexs[a].firstedge=NULL;
+		
+	}
+	//letter convert num
+	// for(b=0;b<g->ednum;b++)
+	// {
+	
+	
+	// }
+	Enode *enew;
+	// Enode *etrail;
+	
+	//etrail=(Enode*)malloc(sizeof(Enode));
+	
+	for(i=0;i<g->ednum;i++)
+	{
+		fflush(stdin);//clear the buffer of scanf
+		scanf("%c%c",&m,&n);
+		p1=getpos(g,m);
+		p2=getpos(g,n);
+		
+		
+		enew=(Enode*)malloc(sizeof(Enode));
+		enew->en=p2;
+		enew->next=g->vexs[p1].firstedge;
+		g->vexs[p1].firstedge=enew;
+		
+		
+		
+		
+		enew=(Enode*)malloc(sizeof(Enode));
+		enew->en=p1;
+		enew->next=g->vexs[p2].firstedge;
+		g->vexs[p2].firstedge=enew;    
+	}//for
+	
+}//cr
+int visited[MAX]={0};
+void DFS(Graph *g,int k)
+{
+	Enode *t;
+	printf("%c",g->vexs[k].vertex);
+    visited[k]=1;
+	t=g->vexs[k].firstedge;
+    while(t!=NULL)
+    {
+		if(visited[t->en]==0)
+		{DFS(g,t->en);}
+		t=t->next;
+	}
+	
+}
+
+void BFS(Graph *g)
+{
+	int visited[MAX]={0};
+	
+    Queue *q,qq;
+	q=&qq;
+	Enode *eq,eeq;
+	eq=&eeq;
+    initQueue(q);
+    enQueue(q,0);
+	while(q->base-q->front!=0)
+	{
+		if(q->front>MAX)
+			break;
+		if(visited[q->base[q->front]]==0)
+			printf("%c",g->vexs[q->base[q->front]].vertex);
+		eq=g->vexs[q->base[q->front]].firstedge;
+		visited[q->base[q->front]]=1;
+		deQueue(q);
+		while(eq!=NULL)
+		{
+			
+			if(visited[eq->en]==0)
+			{enQueue(q,eq->en);}
+			eq=eq->next;
+		}
+		
+	}
+	
+}
+
+
+
+
+
+void main(int argc, char* argv[])
+{
+    //int b;
+	Enode *t=NULL;
+	//printf("\n");
+	Graph *g,gg;
+	g=&gg;
+	graphs();
+	creategraph(g);
+	printf("\n");
+	/* for(b=0;b<g->vexnum;b++)
+	{
+	   printf("%c",g->vexs[b].vertex);
+	   t=g->vexs[b].firstedge;
+	   while(t!=NULL)
+	   
+		 { printf("%d",t->en);
+		 t=t->next;
+		 }
+		 printf("\n");
+		 
+		   
+			 }
+	*/
+	DFS(g,0);
+	printf("\n");
+	
+	BFS(g);
+	printf("\n");
+}
