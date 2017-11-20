@@ -1,0 +1,99 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 10
+
+
+void heapsort(int t[]);
+void HeapAdjust(int a[],int low,int high);
+
+void HeapAdjust(int a[],int low,int high)
+{ 
+	int temp;
+	
+	if(high%2==0)
+	{
+		for(;high>=2;high-=2)
+		{
+			if(a[(high-2)/2]<a[high-1])
+			{
+				temp=a[high-1];
+				a[high-1]=a[(high-2)/2];
+				a[(high-2)/2]=temp;
+			}
+			if(a[(high-2)/2]<a[high])
+			{
+				temp=a[high];
+				a[high]=a[(high-2)/2];
+				a[(high-2)/2]=temp;
+			}
+			
+			
+			
+		}
+		
+	}
+	if(high%2==1)
+	{
+		if(a[(high-1)/2]<a[high])
+		{
+			temp=a[high];
+			a[high]=a[(high-1)/2];
+			a[(high-1)/2]=temp;
+		}
+        for(high=high-1;high>=2;high-=2)
+		{
+			if(a[(high-2)/2]<a[high-1])
+			{
+				temp=a[high-1];
+				a[high-1]=a[(high-2)/2];
+				a[(high-2)/2]=temp;
+			}
+			if(a[(high-2)/2]<a[high])
+			{
+				temp=a[high];
+				a[high]=a[(high-2)/2];
+				a[(high-2)/2]=temp;
+			}
+			
+		}
+	}
+	
+}
+void heapsort(int t[])
+{
+	int i,temp,p;
+	for(i=len-1;i>0;i--)
+	{
+		HeapAdjust(t,0,i);
+		temp=t[0];
+		t[0]=t[i];
+		t[i]=temp;
+	}
+	
+	
+	
+	
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12,72,26};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}	
+	printf("\n");
+	heapsort(a);
+	
+	
+	printf("\n");
+	
+}
