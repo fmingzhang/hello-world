@@ -1,0 +1,51 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 8
+
+
+void selectsort(int t[]);
+
+void selectsort(int t[])
+{
+    int i,j,temp,p,k;// k represent min in a[i]~a[n-1]
+	for(i=0;i<len-1;i++) // i tang
+	{
+		k=i;
+		// find min
+		for(j=i+1;j<=len-1;j++)
+			if(t[j]<t[k]) k=j;
+			//a[i] is min , this loop end.
+			if(k==i) continue;
+			else   //swap min and a[i]
+			{
+				temp=t[k];
+				t[k]=t[i];
+				t[i]=temp;
+			}
+			
+	}
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}
+	
+	printf("\n");
+	selectsort(a);
+	
+	
+	printf("\n");
+	
+}
