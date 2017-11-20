@@ -1,0 +1,69 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 8
+
+
+void sortinsert(int t[]);
+
+void sortinsert(int t[])
+{
+    int i,j,k,temp,pos,p,movelen;
+	j=0;
+	for(i=1;i<len;i++)
+	{
+		//judge invert happen
+		if(t[i]<t[i-1])
+		{
+			temp=t[i];
+			while(j<i)  //find pos
+			{
+				if(t[i]>t[j]) j++;
+				else
+				{
+					pos=j;
+					//move
+					movelen=(i-1)-pos+1;
+					for(k=0;k<movelen;k++)
+					{
+						t[i]=t[i-1];
+						i--;
+						
+					}
+					//insert temp
+					t[pos]=temp;
+					j=0;    //important
+					break;
+					
+				}
+				
+				
+			}
+			
+		}
+		else continue;
+	}
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}
+	
+	printf("\n");
+	sortinsert(a);
+	
+	
+	printf("\n");
+	
+}
