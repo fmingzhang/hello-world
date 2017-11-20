@@ -1,0 +1,88 @@
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define QUEUEMAX 8
+typedef struct{
+	int front;
+	int rear;
+	int *base;
+}queue;
+
+void initqueue(queue *q);
+void enqueue(queue *q,int a);
+void travel(queue *q);
+void  dequeue(queue *q);
+
+void initqueue(queue *q)
+{
+	q->base=(int*)malloc(QUEUEMAX*sizeof(int));
+    if(!q->base)
+	{printf("error");}
+	q->front=0;
+	q->rear=q->front;
+	
+}
+void enqueue(queue *q,int a)
+{
+    if((q->rear+1)%QUEUEMAX==q->front)
+	{printf("full");}
+    else
+	{
+		
+        q->base[q->rear]=a;
+		
+        q->rear=(q->rear+1)%QUEUEMAX;
+	}
+	
+}
+void  dequeue(queue *q)
+{
+    if(q->rear==q->front)
+	{printf("empty");}
+    else
+	{		
+        
+        q->front=(q->front+1)%QUEUEMAX;
+	}
+	
+}
+void travel(queue *q)
+{ 
+	queue *p,*r;
+	queue o;
+	r=&o;
+	p=q;
+	r->front=q->front;
+	int c;
+	
+	if(p->rear==p->front)
+	{printf("emp");}
+    else
+	{
+		for(c=(p->rear)-(p->front);c>0;c--)
+		{ 
+			printf("%d\n",p->base[p->front]);
+			p->front++;
+        }
+	}
+	q->front=r->front;
+}
+void main(int argc, char* argv[])
+{
+	
+	queue h;
+	
+	initqueue(&h);
+	enqueue(&h,9);
+	enqueue(&h,4);
+    enqueue(&h,2);
+	enqueue(&h,1);
+	enqueue(&h,0);
+	travel(&h);
+	dequeue(&h);
+	dequeue(&h);
+	dequeue(&h);
+	
+	travel(&h);
+	
+}
