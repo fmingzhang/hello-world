@@ -1,0 +1,82 @@
+#include "stdafx.h"
+
+
+#include <stdlib.h>
+
+
+#define STACK_SIZE 10
+
+typedef struct
+{   
+    //char data;
+	int top;
+	int bottom;
+	char *base;
+}Stack; 
+
+void initial(Stack *p);
+void push(Stack *p,char a);
+void pop(Stack *p);
+void travel(Stack *p);
+
+void initial(Stack *p)
+{
+	p->base=(char*)malloc(STACK_SIZE*sizeof(char));
+    p->top=0;
+	p->bottom=0;
+}
+
+void push(Stack *p,char a)
+{
+	if((p->top)-(p->bottom)>=10)
+	{printf("stack is full");}
+	else
+	{	p->base[p->top]=a;
+	p->top++;
+	}
+	
+}
+void pop(Stack *p)
+{
+	int j=p->top;
+	
+	if((p->top)=(p->bottom))
+	{printf("stack is empty");}
+	else
+	{
+		j--;
+		p->top=j;
+		
+	}
+	
+}
+void travel(Stack *p)
+{
+	Stack *q;
+	q=p;
+	int i;
+	q->top--;
+	for(i=(q->top)-(q->bottom);i>=0;i--)
+	{
+		printf("%c",q->base[q->top]);
+		q->top--;
+	}
+	
+}
+
+int main(int argc, char* argv[])
+{
+	Stack m;
+	initial(&m);
+	push(&m,'x');
+	push(&m,'y');
+	push(&m,'z');
+	push(&m,'w');
+	pop(&m);
+	pop(&m);
+	travel(&m);
+	printf("\n");
+	
+	
+	return 0; 
+}
