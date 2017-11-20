@@ -1,0 +1,89 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 10
+
+
+void shellsort(int t[]);
+
+void shellsort(int t[])
+{
+    int gap,g,i,j,k,m,temp,p;
+	//generate array of gap
+	int d[3],c;
+	d[0]=len/2;
+    int count=1;
+	while(true)
+	{
+		c=d[count-1]/2;
+		d[count]=c;
+		if(d[count]==1) break;
+		count++;
+		
+	}
+	
+	// get a gap
+	for(g=0;g<3;g++)
+	{
+		gap=d[g];
+		//gap loop
+		for(i=0;i<gap;i++)
+		{
+			//sortinsert
+			for(j=1;j<len/gap;j++)
+			{
+				if(t[i+j*gap]<t[i+(j-1)*gap]) //invert happen
+				{
+					temp=t[i+j*gap];
+					//find position
+					for(k=0;k<j*gap;k+=gap)
+					{
+						if(t[i+j*gap]>t[i+k]) continue;
+						else  // move data
+						{
+							for(m=0;m<j-k/gap;m++)
+							{
+								t[i+(j-m)*gap]=t[i+(j-m-1)*gap];
+								
+							}
+							t[i+k]=temp;
+							
+							
+						}
+						
+						
+					}
+					
+					
+				}
+				else continue;
+				
+			}	  
+		}  
+		
+	}
+	
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12,72,26};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}
+	
+	printf("\n");
+	shellsort(a);
+	
+	
+	printf("\n");
+	
+}
