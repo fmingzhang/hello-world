@@ -1,0 +1,110 @@
+/*#include "stdafx.h"
+#include <string.h>
+int getnext(char data[]);
+int main(int argc, char* argv[])
+{
+	char a[]="amhamppy";
+	
+	
+	getnext(a);
+	
+	
+	
+	return 0;
+}
+
+int getnext(char data[])
+{
+    
+	int tlen=strlen(data);
+	int next[10];
+	int i=0;
+	int j=-1;
+	char *p;
+	p=data;
+	next[0]=-1;
+	while(i<tlen){
+		if(j==-1||p[i]==p[j])
+		{i++;j++;next[i]=j;}
+		else
+		{j=next[j];}
+		
+	}
+	//if(j>=tlen)
+	   //{return i-tlen;}
+	   //else
+	   //{return -1;}
+	for(i=0;i<tlen;i++)
+	{  printf("%d",next[i]);
+	printf(" ");
+	}
+	
+	return 0;
+}
+
+*/   //next数组
+KMP:
+
+
+
+#include "stdafx.h"
+#include <string.h>
+int kmp(int pos,char data[],char find[],int next[]);
+int getnext(char find[]);
+
+static int next[20];
+int main(int argc, char* argv[])
+{
+	char a[]="abpphabababcpykiu";
+	char b[]="ababc";
+	
+	getnext(b);
+	
+	kmp(0,a,b,next);
+	
+	
+	
+	return 0;
+}
+
+int kmp(int pos,char data[],char find[],int next[])
+{
+	char *s,*p;
+	s=data;
+	p=find;
+	int slen=strlen(data);
+	int tlen=strlen(find);
+	int i=pos-1;
+	int j=-1;
+	
+	while(i<slen&&j<tlen){
+		if(j==-1||s[i]==p[j])
+		{i++;j++;}
+		else
+		{j=next[j];}
+		
+	}
+	if(j>=tlen)
+	{ printf("%d\n",(i-tlen));}
+	else{return -1;}
+	
+	return 0;
+}
+int getnext(char find[])
+{
+	char *p;
+	p=find;
+	
+	int tlen=strlen(find);
+	int i=0;
+	int j=-1;
+	next[0]=-1;
+	while(i<tlen){
+		if(j==-1||p[i]==p[j])
+        {i++;j++;next[i]=j;}
+		else{j=next[j];}
+	}
+	return 0;
+}
+
+	 
