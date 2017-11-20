@@ -1,0 +1,106 @@
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define QUEUEMAX 10
+
+
+//binary tree
+typedef struct tree{
+	char data;
+	struct tree *lchild,*rchild;	
+}Bitree;
+
+
+
+//Binary tree
+void map();
+void createbitree(Bitree *&bt);
+int depth(Bitree *bt);
+int numofallnodes(Bitree *bt);
+int numoffinnodes(Bitree *bt);
+
+void map()
+{
+	printf("\n");
+    printf("                  a");printf("\n");
+	printf("               /"); printf("     \\");printf("\n");
+    printf("             b");printf("         c");printf("\n");
+    printf("           /");printf("        /");printf("     \\");printf("\n");
+	printf("         d");printf("         e");printf("        f");printf("\n");
+	printf("       /");printf("    \\");printf("\n");
+    printf("     g");printf("        h");printf("\n");
+}
+
+void createbitree(Bitree *&bt)
+{
+	//?¨á??ù?úµ?
+	char a;
+	scanf("%c",&a);
+	if(a=='#')
+	{bt=NULL;
+	// return ;
+	}
+	else
+	{
+		bt=(Bitree*)malloc(sizeof(Bitree));
+		bt->data=a;
+		createbitree(bt->lchild);
+		createbitree(bt->rchild);
+	}
+	
+	//	return ;
+	
+}
+int depth(Bitree *bt)
+{
+	int m,n;
+	m=0;
+	n=0;
+	if(bt==NULL)
+	{return 0;}
+	else
+	{
+		m=depth(bt->lchild);
+		n=depth(bt->rchild);
+		return (m>n)?(m+1):(n+1);
+	}	
+}
+int numofallnodes(Bitree *bt)
+{
+	if(bt==NULL)
+	{return 0;}
+	return 1+numofallnodes(bt->lchild)+numofallnodes(bt->rchild);
+	
+	
+}
+int numoffinnodes(Bitree *bt)
+{
+	if(bt==NULL)
+	{return 0;}
+	if(bt->lchild==NULL&&bt->rchild==NULL)
+	{return 1;}
+	return numoffinnodes(bt->lchild)+numoffinnodes(bt->rchild);
+	
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	Bitree *tre;
+    int a,b,c;
+	map();
+	createbitree(tre);
+    a=depth(tre);
+	printf("depth:%d",a);
+	printf("\n");
+	b=numofallnodes(tre);
+	printf("all:%d",b);
+	printf("\n");
+	c=numoffinnodes(tre);
+	printf("ff:%d",c);
+	printf("\n");
+	
+	
+}
