@@ -1,0 +1,123 @@
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+typedef struct node{
+	int data;
+	struct node *next;	
+}node;
+void creatnode(node *head);
+void travel(node *head);
+void initial(node *head);
+int search(node *head,int b);
+void insert(node *head,int pos,int num);
+void del(node *head,int n);
+
+void initial(node *head)
+{
+	head=(node*)malloc(sizeof(node));
+    head=NULL;
+}
+void creatnode(node *head)
+{
+	
+	node *p;
+	node *p1;   
+	p=(node*)malloc(sizeof(node));
+	printf("input number:");
+	scanf("%d",&p->data);
+	head->next=p; 
+	while(true)
+	{
+		p1=(node*)malloc(sizeof(node));
+		printf("input number:");
+		scanf("%d",&p1->data);
+		if(0!=p1->data)
+		{
+			p->next=p1;
+			p=p1;
+		}
+		else
+		{
+			
+			p1=NULL;
+			p->next=p1;
+			printf("end\n");
+			break;
+		}
+	}
+	
+	
+}
+//±éàúá'±í
+void travel(node *head)
+{
+	node *t;
+	t=head->next;
+	while(NULL!=t)
+	{
+		printf("%d ",t->data);                    
+        t=t->next; 
+		
+	}
+	printf("\n");
+	
+}
+int search(node *head,int b)
+{
+	node *t;
+	t=head->next;
+	int i=1;
+	while(NULL!=t)
+	{
+		if(b==(t->data))
+		{//printf("%d\n",i);
+			break;}
+		else
+		{i++; t=t->next;}
+		
+	}
+	return i;
+}
+void insert(node *head,int pos,int num)
+{
+	node *h,*newnode;
+	h=head;
+    int j,k;
+	j=search(head,pos);
+	//printf("%d\n",j);
+    for(k=0;k<j;k++)
+	{h=h->next;}
+    newnode=(node*)malloc(sizeof(node));
+	newnode->data=num;
+	newnode->next=h->next;
+    h->next=newnode;
+	
+}
+void del(node *head,int n)
+{
+	node *h1,*h2;
+	h1=head;
+	h2=head;
+	int jj,kk;
+	jj=search(head,n);
+	//printf("%d\n",j);
+    for(kk=0;kk<jj;kk++)
+	{h1=h1->next;}
+	for(kk=0;kk<(jj-1);kk++)
+	{h2=h2->next;}
+	h2->next=h1->next;
+	
+}
+void main(int argc, char* argv[])
+{
+	node a;
+	//int mm;
+	initial(&a);
+	creatnode(&a);
+	travel(&a);
+	
+	//insert(&a,4,99);
+	del(&a,4);
+	travel(&a);
+	
+}
