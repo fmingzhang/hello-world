@@ -1,0 +1,64 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 10
+
+
+void quicksort(int t[],int low,int high);
+
+void quicksort(int t[],int low,int high)
+{
+    int i,j,pivotkey,p;
+	pivotkey=t[low];
+	i=low;
+	j=high;
+	
+    if(low<high)  //judge recursion
+	{
+		while(i<j)
+		{
+			while(t[j]>pivotkey&&i<j) j--;
+			if(i<j)  //avoid i==j
+			{
+				t[i]=t[j];
+				t[j]=pivotkey;
+			}
+			while(t[i]<pivotkey&&i<j) i++;
+			if(i<j)  //avoid i==j
+			{
+				t[j]=t[i];
+				t[i]=pivotkey;
+			}
+			
+			
+		}
+		quicksort(t,low,i-1);  //in the end,i==j and i?j in the position of the pivotkey
+		quicksort(t,i+1,high);
+		
+		
+	}
+	
+	
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12,72,26};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}	
+	printf("\n");
+	quicksort(a,0,len-1);
+	
+	
+	printf("\n");
+	
+}
