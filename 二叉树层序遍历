@@ -1,0 +1,205 @@
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define QUEUEMAX 10
+
+
+//binary tree
+typedef struct tree{
+	char data;
+	struct tree *lchild,*rchild;	
+}Bitree;
+
+//queue
+typedef struct{
+	int front;
+	int rear;
+	Bitree *base;
+}queue;
+
+//queue
+void initqueue(queue *q);
+void enqueue(queue *q,Bitree *a);
+void travel(queue *q);
+Bitree  dequeue(queue *q);
+Bitree gethead(queue *q);
+
+void initqueue(queue *q)
+{
+	q->base=(Bitree*)malloc(QUEUEMAX*sizeof(Bitree));
+    if(!q->base)
+	{printf("error");}
+	q->front=0;
+	q->rear=q->front;
+	
+}
+void enqueue(queue *q,Bitree *a)
+{
+    //if((q->rear+1)%QUEUEMAX==q->front)
+	//{printf("full");}
+    //else
+	//{
+	
+	q->base[q->rear]=*a;
+	
+	q->rear=(q->rear+1)%QUEUEMAX;
+	//}
+	
+}
+Bitree  dequeue(queue *q)
+{
+    if(q->rear==q->front)
+	{printf("empty");}
+    else
+	{	
+        
+        q->front=(q->front+1)%QUEUEMAX;
+	}
+    return q->base[q->front-1];
+}
+void travel(queue *q)
+{ 
+	queue *p,*r;
+	queue o;
+	r=&o;
+	p=q;
+	r->front=q->front;
+	int c;
+	
+	if(p->rear==p->front)
+	{printf("emp");}
+    else
+	{
+		for(c=(p->rear)-(p->front);c>0;c--)
+		{ 
+			printf("%c\n",p->base[p->front]);
+			p->front++;
+        }
+	}
+	q->front=r->front;
+}
+
+//Binary tree
+void map();
+void createbitree(Bitree *&bt);
+void preorder(Bitree *bt);
+void inorder(Bitree *bt);
+void postorder(Bitree *bt);
+void levelorder(Bitree *bt);
+
+void map()
+{
+	printf("\n");
+    printf("                  a");printf("\n");
+	printf("               /"); printf("     \\");printf("\n");
+    printf("             b");printf("         c");printf("\n");
+    printf("           /");printf("        /");printf("     \\");printf("\n");
+	printf("         d");printf("         e");printf("        f");printf("\n");
+	printf("       /");printf("    \\");printf("\n");
+    printf("     g");printf("        h");printf("\n");
+}
+
+void createbitree(Bitree *&bt)
+{
+	//½¨Á¢¸ù½Úµã
+	char a;
+	scanf("%c",&a);
+	if(a=='#')
+	{bt=NULL;
+	// return ;
+	}
+	else
+	{
+		bt=(Bitree*)malloc(sizeof(Bitree));
+		bt->data=a;
+		createbitree(bt->lchild);
+		createbitree(bt->rchild);
+	}
+	
+	//	return ;
+	
+}
+void preorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		printf("%c",bt->data);
+		preorder(bt->lchild);
+		preorder(bt->rchild);
+	}
+	//printf("\n");
+}
+void inorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		
+		inorder(bt->lchild);
+		printf("%c",bt->data);
+		inorder(bt->rchild);
+	}
+	//printf("\n");
+}
+void postorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		
+		postorder(bt->lchild);
+		postorder(bt->rchild);
+		printf("%c",bt->data);
+	}
+	//printf("\n");
+}
+Bitree gethead(queue *q)
+{
+	
+	return q->base[q->front];
+	
+}
+void levelorder(Bitree *bt)
+{
+	Bitree *le,*de,f;//f?????
+	de=&f;
+	le=bt;
+	queue ss,*qq;//ss??
+	qq=&ss;
+	initqueue(qq);
+	enqueue(qq,le);
+	while(qq->rear!=qq->front)
+	{
+		
+		//?????
+		*le=gethead(qq);
+		*de=dequeue(qq);
+		printf("%c",de->data);
+		
+		if(le->lchild!=NULL)
+		{enqueue(qq,le->lchild);}
+		if(le->rchild!=NULL)
+		{enqueue(qq,le->rchild);}
+		
+	}
+	
+	
+	
+}
+void main(int argc, char* argv[])
+{
+	Bitree *tre;
+	//	tre=NULL;
+	map();
+	createbitree(tre);
+	
+	//	preorder(tre);
+	//	printf("\n");
+	//  inorder(tre);
+	//	printf("\n");
+	//  postorder(tre);
+	//   printf("\n");
+	levelorder(tre);
+	printf("\n");
+}
