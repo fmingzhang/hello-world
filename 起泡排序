@@ -1,0 +1,53 @@
+// node.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+#define len 8
+
+
+void bubblesort(int t[]);
+
+void bubblesort(int t[])
+{
+    int i,j,temp,p;
+	for(i=0;i<len-1;i++)  //len-1?
+	{
+		j=0;
+		while(j<len-1)   //??len-1?
+		{
+			if(t[j]<t[j+1]) j++;
+			else
+			{
+				temp=t[j];
+				t[j]=t[j+1];
+				t[j+1]=temp;
+				j++;
+			}
+			
+		}
+		
+		
+	}
+    for(p=0;p<len;p++)
+	{printf("%d",t[p]);printf("\t");}
+	
+}
+
+
+
+void main(int argc, char* argv[])
+{
+	int a[len]={45,56,23,89,64,39,96,12};  //increase
+	int m;
+	for(m=0;m<len;m++)
+	{printf("%d",a[m]);printf("\t");}
+	
+	printf("\n");
+	bubblesort(a);
+	
+	
+	printf("\n");
+	
+}
