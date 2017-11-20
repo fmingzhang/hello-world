@@ -1,2 +1,2 @@
 # hello-world
-using code
+hello everyone!
