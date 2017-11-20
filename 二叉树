@@ -1,0 +1,114 @@
+#include "stdafx.h"
+#include <string.h>
+#include <stdlib.h>
+typedef struct tree{
+	char data;
+	struct tree *lchild,*rchild;	
+}Bitree;
+
+
+void map();
+void createbitree(Bitree *&bt);
+void preorder(Bitree *bt);
+void inorder(Bitree *bt);
+void postorder(Bitree *bt);
+
+void map()
+{
+	printf("\n");
+    printf("                  a");printf("\n");
+	printf("               /"); printf("     \\");printf("\n");
+    printf("             b");printf("         c");printf("\n");
+    printf("           /");printf("        /");printf("     \\");printf("\n");
+	printf("         d");printf("         e");printf("        f");printf("\n");
+	printf("       /");printf("    \\");printf("\n");
+    printf("     g");printf("        h");printf("\n");
+}
+void createbitree(Bitree *&bt)
+{
+	char a;
+	scanf("%c",&a);
+	if(a=='#')
+	{bt=NULL;
+	// return ;
+	}
+	else
+	{
+		bt=(Bitree*)malloc(sizeof(Bitree));
+		bt->data=a;
+		createbitree(bt->lchild);
+		createbitree(bt->rchild);
+	}
+	
+	//	return ;
+	
+}
+void preorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		printf("%c",bt->data);
+		preorder(bt->lchild);
+		preorder(bt->rchild);
+	}
+	//printf("\n");
+}
+void inorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		
+		inorder(bt->lchild);
+		printf("%c",bt->data);
+		inorder(bt->rchild);
+	}
+	//printf("\n");
+}
+void postorder(Bitree *bt)
+{
+	if(bt!=NULL)
+	{
+		
+		
+		postorder(bt->lchild);
+		postorder(bt->rchild);
+		printf("%c",bt->data);
+	}
+	//printf("\n");
+}
+void main(int argc, char* argv[])
+{
+	Bitree *tre;
+	//	tre=NULL;
+	map();
+	createbitree(tre);
+	
+	preorder(tre);
+	printf("\n");
+    inorder(tre);
+	printf("\n");
+	postorder(tre);
+	printf("\n");
+}
+
+//depth
+int depth(Bitree *bt)
+{
+	int m,n;
+	m=0;n=0;
+	if(bt==NULL)
+	{return 0;}
+	else
+	{
+		m=depth(bt->lchild);
+		n=depth(bt->rchild);
+		return m>n?(m+1):(n+1);
+		
+	}
+	
+	
+	
+}
+
